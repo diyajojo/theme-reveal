@@ -1,9 +1,21 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { quizQuestions } from './quiz';
 
 export default function GamePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black bg-opacity-90 flex items-center justify-center">
+        <div className="text-white text-2xl">Loading...</div>
+      </div>
+    }>
+      <GameContent />
+    </Suspense>
+  );
+}
+
+function GameContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const playerName = searchParams.get('name') || 'Mystery Player';
@@ -44,10 +56,10 @@ export default function GamePage() {
     } 
     else 
     {
-     
+      // Quiz finished - show results
       setShowResult(true);
       
-      
+      // Redirect after 5 seconds
       setTimeout(() => {
         router.push(`/explore?name=${encodeURIComponent(playerName)}&avatar=${encodeURIComponent(playerAvatar)}&score=${score + (isCorrect ? 1 : 0)}`);
       }, 5000);
