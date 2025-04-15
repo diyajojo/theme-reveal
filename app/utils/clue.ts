@@ -11,4 +11,7 @@ export const clueLinks = [
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736170/d0483e0d5afa2af95137daefcf4e74ae_pentra.jpg',
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736171/059f4830a700c75527f847b83edceaf3_pt39cq.jpg',
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736171/ac854c2287341422436f0ac3b9bd722f_zjwdtn.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744737189/maxresdefault_wuu1pl.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744737188/eiffel-tower-las-vegas-james-granberry_ddrddw.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744737188/th_1_lhigeo.jpg',
 ];
