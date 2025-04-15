@@ -101,7 +101,7 @@ const CollectionModal = ({
           <button
             onClick={() => {
               if (showFinalStage) {
-                window.location.href = 'https://jigex.com/WPZh5';
+                window.location.href = 'https://jigex.com/Nhz5g';
               } else {
                 onClose();
               }
