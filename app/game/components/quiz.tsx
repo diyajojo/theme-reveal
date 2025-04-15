@@ -15,7 +15,7 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
-  const [showInitialModal, setShowInitialModal] = useState(true);
+
 
   const handleOptionSelect = (optionIndex: number) => {
     if (!isAnswerChecked) {
@@ -49,8 +49,7 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
   };
 
   return (
-    <div className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center text-white font-mono relative overflow-hidden"
-         style={{ backgroundImage: "url('/casino-background.jpg')" }}>
+    <div className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center text-white font-mono relative overflow-hidden">
       <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
       
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl">
