@@ -15,6 +15,7 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+  const [showInitialModal, setShowInitialModal] = useState(true);
 
   const handleOptionSelect = (optionIndex: number) => {
     if (!isAnswerChecked) {
@@ -48,24 +49,25 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
   };
 
   return (
-    <div className="min-h-screen bg-black bg-opacity-90 flex flex-col items-center justify-center text-white font-mono relative overflow-hidden">
+    <div className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center text-white font-mono relative overflow-hidden"
+         style={{ backgroundImage: "url('/casino-background.jpg')" }}>
       <div className="absolute inset-0 bg-black bg-opacity-80 z-0"></div>
       
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-4xl">
         {!showResult ? (
-          <div className="bg-gray-900 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 mb-8 max-w-2xl backdrop-blur-sm animate-fadeIn">
+          <div className="bg-black bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 mb-8 max-w-2xl backdrop-blur-sm shadow-[0_0_30px_rgba(255,215,0,0.3)]">
             <div className="flex justify-between items-center mb-6">
               <div className="flex items-center">
                 <span className="text-2xl mr-2">{playerAvatar}</span>
-                <span className="text-yellow-300 font-bold">{playerName}</span>
+                <span className="text-yellow-400 font-bold">{playerName}</span>
               </div>
-              <div className="text-yellow-300">
+              <div className="text-yellow-400">
                 Question {currentQuestion + 1}/{quizQuestions.length}
               </div>
             </div>
             
             <div className="mb-8">
-              <h2 className="text-2xl mb-6 text-yellow-200">
+              <h2 className="text-2xl mb-6 text-yellow-300">
                 {quizQuestions[currentQuestion].question}
               </h2>
               
@@ -79,12 +81,12 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
                       !isAnswerChecked
                         ? selectedOption === index
                           ? 'bg-yellow-600 border-yellow-400 text-white'
-                          : 'bg-gray-800 border-gray-700 hover:bg-gray-700'
+                          : 'bg-black border-yellow-900 hover:bg-yellow-900 hover:bg-opacity-20'
                         : index === quizQuestions[currentQuestion].correctAnswer
                         ? 'bg-yellow-600 border-yellow-400 text-white'
                         : selectedOption === index
                         ? 'bg-red-600 border-red-400 text-white'
-                        : 'bg-gray-800 border-gray-700 opacity-50'
+                        : 'bg-black border-gray-700 opacity-50'
                     }`}
                   >
                     {['A', 'B', 'C', 'D'][index]}. {option}
@@ -96,28 +98,26 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
             <button
               onClick={handleNextQuestion}
               disabled={selectedOption === null}
-              className="bg-yellow-600 hover:bg-yellow-500 disabled:bg-gray-600 disabled:hover:bg-gray-600 text-white px-10 py-3 rounded-full font-bold text-lg transition-all shadow-lg cursor-pointer disabled:cursor-not-allowed"
+              className="bg-yellow-600 hover:bg-yellow-500 disabled:bg-gray-600 disabled:hover:bg-gray-600 text-white px-10 py-3 rounded-full font-bold text-lg transition-all shadow-lg cursor-pointer disabled:cursor-not-allowed border border-yellow-400"
             >
               {currentQuestion < quizQuestions.length - 1 ? 'NEXT QUESTION' : 'SUBMIT ANSWERS'}
             </button>
           </div>
         ) : (
-          <div className="bg-gray-900 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 mb-8 max-w-2xl backdrop-blur-sm animate-fadeIn">
-            <h2 className="text-3xl font-bold mb-4 text-yellow-300">NJ Knowledge Assessment</h2>
+          <div className="bg-black bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 mb-8 max-w-2xl backdrop-blur-sm shadow-[0_0_30px_rgba(255,215,0,0.3)]">
+            <h2 className="text-3xl font-bold mb-4 text-yellow-400">NJ Knowledge Assessment</h2>
             
             <div className="text-6xl mb-6">
               {score >= 8 ? '🌟' : score >= 5 ? '✨' : '💫'}
             </div>
             
-            <p className="text-2xl mb-4">
-              You scored: <span className="text-yellow-300 font-bold">{score}/{quizQuestions.length}</span>
+            <p className="text-2xl mb-4 text-yellow-300">
+              You scored: <span className="text-yellow-400 font-bold">{score}/{quizQuestions.length}</span>
             </p>
             
-            <p className="text-lg mb-8">
-              "Congratulations on completing the NJ Knowledge Quiz! You've proven your connection to our hostel community. Your are one step behind the farwell celebration .
+            <p className="text-lg mb-8 text-yellow-200">
+              "Congratulations on completing the NJ Knowledge Quiz! You've proven your connection to our hostel community. Your are one step behind the farewell celebration."
             </p>
-            
-            
           </div>
         )}
       </div>

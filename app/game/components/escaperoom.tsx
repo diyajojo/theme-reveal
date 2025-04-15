@@ -1,11 +1,13 @@
 'use client';
 import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 // Define interfaces for component props
 interface GameComponentProps {
   playerName: string;
   playerAvatar: string;
   quizScore: number;
+  onGameComplete: (won: boolean) => void;
 }
 
 // Define interfaces for your state objects
@@ -36,11 +38,13 @@ interface Fairy {
 }
 
 const gridSize = 10;
-const treasureCount = 5;
+const treasureCount = 8;  // Changed from 5 to 8
 const fairyCount = 2;
 const totalGuards = 6; // Increased from 3 to 6 guards
 
-export default function GameComponent({ playerName, playerAvatar, quizScore }: GameComponentProps) {
+export default function GameComponent({ playerName, playerAvatar, quizScore, onGameComplete }: GameComponentProps) {
+  const router = useRouter();
+
   const [playerPos, setPlayerPos] = useState<Position>({ x: 0, y: 0 });
   const [guards, setGuards] = useState<Guard[]>([]);
   const [treasures, setTreasures] = useState<Treasure[]>([]);
@@ -53,6 +57,7 @@ export default function GameComponent({ playerName, playerAvatar, quizScore }: G
   const [showInstructions, setShowInstructions] = useState(true);
   const [isPaused, setIsPaused] = useState(true);
   const [fairiesSpawned, setFairiesSpawned] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const gameTimeRef = useRef(0);
 
@@ -229,14 +234,12 @@ export default function GameComponent({ playerName, playerAvatar, quizScore }: G
       });
       
       if (collected) {
-        setCollectedTreasures(prev => {
-          const newCount = prev + 1;
-          if (newCount >= treasureCount) {
-            setGameWon(true);
-            if (timerRef.current) clearInterval(timerRef.current);
-          }
-          return newCount;
-        });
+        const newCount = collectedTreasures + 1;
+        setCollectedTreasures(newCount);
+        if (newCount >= treasureCount) {
+          setGameWon(true);
+          if (timerRef.current) clearInterval(timerRef.current);
+        }
       }
       
       return updatedTreasures;
@@ -312,6 +315,12 @@ export default function GameComponent({ playerName, playerAvatar, quizScore }: G
     // Re-initialize game elements
     initializeGame();
     setIsPaused(false);
+  };
+
+  // Function to redirect to puzzle through an intermediate page
+  const redirectToPuzzle = () => {
+    // Call the onGameComplete with true to trigger the collection modal
+    onGameComplete(true);
   };
 
   const renderGrid = () => {
@@ -474,7 +483,7 @@ export default function GameComponent({ playerName, playerAvatar, quizScore }: G
           </div>
         )}
         
-        {/* Win screen */}
+        {/* Win screen - Modified to include redirect to puzzle */}
         {gameWon && (
           <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-90 z-20">
             <div className="bg-black p-8 rounded-xl border-2 border-yellow-400 max-w-lg text-center">
@@ -482,21 +491,18 @@ export default function GameComponent({ playerName, playerAvatar, quizScore }: G
               <p className="mb-6 text-yellow-200">
                 You've hit the big time! Successfully collected all stars with {timeLeft} seconds remaining!
               </p>
-              <p className="mb-6 text-xl font-bold text-yellow-300">
-                Time to cash out and make your escape!
-              </p>
               <div className="flex gap-4 justify-center">
-                <button 
-                  onClick={resetGame}
-                  className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-full font-bold text-lg transition-colors"
-                >
-                  PLAY AGAIN
-                </button>
                 <button 
                   onClick={resetGame}
                   className="bg-yellow-800 hover:bg-yellow-700 text-white px-6 py-3 rounded-full font-bold text-lg transition-colors"
                 >
-                  CASH OUT
+                  PLAY AGAIN
+                </button>
+                <button 
+                  onClick={redirectToPuzzle}
+                  className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-full font-bold text-lg transition-colors"
+                >
+                  CONTINUE
                 </button>
               </div>
             </div>
