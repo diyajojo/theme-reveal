@@ -49,7 +49,7 @@ export default function ClueComponent({ playerName, playerAvatar, userId, onComp
   }, [userId]);
 
   const handlePasswordSubmit = () => {
-    if (password.toLowerCase() === 'lasvegas' && password.toLowerCase()==='las vegas') {
+    if (password.toLowerCase() === 'lasvegas' || password.toLowerCase()==='las vegas') {
       setShowCompletionModal(true);
     } else {
       setPasswordError('Incorrect theme. Try again!');
