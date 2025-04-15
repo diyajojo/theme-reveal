@@ -6,5 +6,9 @@ export const clueLinks = [
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744734931/coordinates_wb8bru.jpg',
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744734931/R-5649284-1398943464-6478_shzhys.jpg',
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744734931/istockphoto-1002855240-2048x2048_ucc3if.jpg',
-  'https://i.imgur.com/example8.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736170/sphere-with-neon-lights-it_902639-25810_f3gtlj.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736170/16144130_fgtk1j.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736170/d0483e0d5afa2af95137daefcf4e74ae_pentra.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736171/059f4830a700c75527f847b83edceaf3_pt39cq.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744736171/ac854c2287341422436f0ac3b9bd722f_zjwdtn.jpg',
 ];

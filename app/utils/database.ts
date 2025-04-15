@@ -17,7 +17,7 @@ export async function addUser(username: string): Promise<number> {
   // Calculate next ID with rotation
   let nextId = 0;
   if (maxIdResult) {
-    nextId = maxIdResult.id >= 7 ? 0 : maxIdResult.id + 1;
+    nextId = maxIdResult.id >= 11 ? 0 : maxIdResult.id + 1;
   }
 
   // Insert new user with the calculated ID

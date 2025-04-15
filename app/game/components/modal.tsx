@@ -9,16 +9,16 @@ interface CollectionModalProps {
   showFinalStage?: boolean;
 }
 
-const CollectionModal = ({ 
-  isOpen, 
-  onClose, 
-  collectedItems, 
+const CollectionModal = ({
+  isOpen,
+  onClose,
+  collectedItems,
   totalItems,
   showFinalStage = false
 }: CollectionModalProps) => {
   const [animateItems, setAnimateItems] = useState(false);
   
-  // Collection items (replace with your unique items)
+  // Collection items with enhanced icons
   const collectionItems = [
     { name: 'Ancient Key', emoji: '🗝️', collected: collectedItems >= 1 },
     { name: 'Crystal Orb', emoji: '🔮', collected: collectedItems >= 2 },
@@ -38,26 +38,30 @@ const CollectionModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50 backdrop-blur-sm">
-      <div className="bg-gray-900 text-white p-8 rounded-xl border-2 border-yellow-500 w-full max-w-md shadow-lg relative overflow-hidden">
-        <div className="mb-6 text-center">
-          <h3 className="text-2xl font-bold mb-2 text-yellow-300">
-            Mystery Collection
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
+      <div className="bg-black bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 w-full max-w-md shadow-[0_0_30px_rgba(255,215,0,0.3)] relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-16 h-16 bg-yellow-500 opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-24 h-24 bg-yellow-500 opacity-5 rounded-full translate-x-1/2 translate-y-1/2"></div>
+        
+        <div className="mb-8 text-center">
+          <h3 className="text-2xl font-bold mb-3 text-yellow-400 tracking-wider">
+            {showFinalStage ? 'Collection Complete!' : 'Mystery Collection'}
           </h3>
           
-          <div className="w-full bg-gray-800 h-3 rounded-full overflow-hidden">
+          <div className="w-full bg-black h-4 rounded-full overflow-hidden mb-2 border border-yellow-900">
             <div 
-              className="bg-yellow-500 h-full transition-all duration-1000" 
+              className="bg-gradient-to-r from-yellow-600 to-yellow-500 h-full transition-all duration-1000" 
               style={{ width: `${(collectedItems / totalItems) * 100}%` }}
             ></div>
           </div>
           
-          <p className="mt-2 text-yellow-200 font-bold">
+          <p className="mt-2 text-yellow-200 font-bold text-lg">
             {collectedItems} of {totalItems} collected
           </p>
         </div>
 
-        <div className="flex justify-center gap-6 mb-8">
+        <div className="flex justify-center gap-8 mb-10">
           {collectionItems.map((item, index) => (
             <div 
               key={index}
@@ -66,14 +70,15 @@ const CollectionModal = ({
               }`}
               style={{ transitionDelay: `${index * 200}ms` }}
             >
-              <div className={`text-4xl mb-2 p-4 rounded-full ${
-                item.collected 
-                  ? 'bg-yellow-600 animate-pulse' 
-                  : 'bg-gray-800 opacity-50'
-              }`}>
+              <div className={`text-4xl mb-3 p-5 rounded-full 
+                ${item.collected 
+                  ? 'bg-gradient-to-b from-yellow-600 to-yellow-800 border-2 border-yellow-400 shadow-[0_0_15px_rgba(255,215,0,0.3)]' 
+                  : 'bg-black border-2 border-yellow-900 opacity-50'
+                }
+              `}>
                 {item.emoji}
               </div>
-              <span className={`text-sm ${item.collected ? 'text-yellow-300' : 'text-gray-400'}`}>
+              <span className={`text-sm font-medium ${item.collected ? 'text-yellow-300' : 'text-gray-500'}`}>
                 {item.collected ? item.name : '???'}
               </span>
             </div>
@@ -81,11 +86,14 @@ const CollectionModal = ({
         </div>
         
         {showFinalStage && (
-          <div className="text-center mb-6 animate-fadeIn">
-            <p className="text-lg text-yellow-100 mb-2">Congratulations! All items collected!</p>
-            <h4 className="text-3xl font-bold text-yellow-400">
-              Ready for the Final Puzzle?
-            </h4>
+          <div className="text-center mb-8 animate-fadeIn">
+            <div className="py-3 px-6 bg-black bg-opacity-50 rounded-lg border border-yellow-600 mb-4">
+              <p className="text-lg text-yellow-100 mb-2">Congratulations!</p>
+              
+            </div>
+            <div className="text-center">
+              <div className="inline-block animate-bounce text-4xl mb-2">👇</div>
+            </div>
           </div>
         )}
 
@@ -98,9 +106,19 @@ const CollectionModal = ({
                 onClose();
               }
             }}
-            className="px-6 py-3 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded transition-colors flex items-center gap-2 cursor-pointer"
+            className="px-8 py-4 bg-gradient-to-r from-yellow-700 to-yellow-500 hover:from-yellow-600 hover:to-yellow-400 text-white font-bold rounded-full transition-colors flex items-center gap-2 cursor-pointer shadow-lg hover:shadow-xl transform hover:-translate-y-1 duration-200"
           >
-            {showFinalStage ? 'Start Final Puzzle' : 'Continue the Hunt'}
+            {showFinalStage ? (
+              <>
+                <span className="text-lg">Solve Final Puzzle</span>
+                <span className="text-xl">🧩</span>
+              </>
+            ) : (
+              <>
+                <span className="text-lg">Continue the Hunt</span>
+                <span className="text-xl">⚔️</span>
+              </>
+            )}
           </button>
         </div>
       </div>
@@ -113,6 +131,10 @@ const CollectionModal = ({
 
         .animate-fadeIn {
           animation: fadeIn 0.8s ease-out;
+        }
+        
+        .drop-shadow-glow {
+          filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.5));
         }
       `}</style>
     </div>

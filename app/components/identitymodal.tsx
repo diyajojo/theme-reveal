@@ -42,7 +42,7 @@ const IdentityModal = ({ onClose }: IdentityModalProps) => {
       localStorage.setItem('playerAvatar', avatarOptions[avatarIndex]);
       localStorage.setItem('userId', userId.toString());
 
-      const text = "Identity confirmed. Preparing for mission...";
+      const text = "oIdentity confirmed. Preparing for mission...";
       let i = 0;
       const typingEffect = setInterval(() => {
         if (i < text.length) {
