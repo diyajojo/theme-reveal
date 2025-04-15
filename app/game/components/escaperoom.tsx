@@ -382,10 +382,6 @@ export default function GameComponent({ playerName, playerAvatar, quizScore }: G
                 <div className="text-yellow-400 text-sm">PLAYER</div>
                 <div className="font-bold">{playerName}</div>
               </div>
-              <div className="ml-4">
-                <div className="text-yellow-400 text-sm">LUCK POINTS</div>
-                <div className="font-bold">{quizScore}</div>
-              </div>
             </div>
             
             {/* Game stats */}

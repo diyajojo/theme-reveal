@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import QuizComponent from './components/quiz';
 import GameComponent from './components/escaperoom';
+import WelcomeComponent from './components/welcome';
 
 // Loading component for Suspense fallback
 const LoadingFallback = () => (
@@ -18,7 +19,7 @@ const LoadingFallback = () => (
 const GameContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [currentStep, setCurrentStep] = useState<'quiz' | 'game'>('quiz');
+  const [currentStep, setCurrentStep] = useState<'welcome' | 'quiz' | 'game'>('welcome');
   const [playerName, setPlayerName] = useState('');
   const [playerAvatar, setPlayerAvatar] = useState('');
   const [quizScore, setQuizScore] = useState(0);
@@ -36,6 +37,10 @@ const GameContent = () => {
     setPlayerAvatar(decodeURIComponent(avatar));
   }, [searchParams, router]);
   
+  const handleWelcomeComplete = () => {
+    setCurrentStep('quiz');
+  };
+
   const handleQuizComplete = (score: number) => {
     setQuizScore(score);
     setCurrentStep('game');
@@ -47,20 +52,24 @@ const GameContent = () => {
     }
     
     switch (currentStep) {
+      case 'welcome':
+        return <WelcomeComponent
+                playerName={playerName}
+                playerAvatar={playerAvatar}
+                onStart={handleWelcomeComplete}
+              />;
       case 'quiz':
         return <QuizComponent
                 playerName={playerName}
                 playerAvatar={playerAvatar}
                 onQuizComplete={handleQuizComplete}
               />;
-               
       case 'game':
         return <GameComponent
                 playerName={playerName}
                 playerAvatar={playerAvatar}
                 quizScore={quizScore}
               />;
-               
       default:
         return <div>Loading...</div>;
     }

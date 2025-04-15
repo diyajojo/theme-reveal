@@ -43,7 +43,7 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
       setTimeout(() => {
         const finalScore = score + (isCorrect ? 1 : 0);
         onQuizComplete(finalScore);
-      }, 3000);
+      }, 5000);
     }
   };
 
@@ -114,16 +114,10 @@ export default function QuizComponent({ playerName, playerAvatar, onQuizComplete
             </p>
             
             <p className="text-lg mb-8">
-              {score >= 8 
-                ? "Impressive! You're a true NJ hostel legend. Your knowledge of our community is outstanding!"
-                : score >= 5 
-                ? "Well done! You've demonstrated enough knowledge of NJ hostel to attend the farewell. Welcome aboard!"
-                : "You've shown some connection to NJ hostel. We'll let you in, but you might want to mingle more!"}
+              "Congratulations on completing the NJ Knowledge Quiz! You've proven your connection to our hostel community. Your are one step behind the farwell celebration .
             </p>
             
-            <p className="text-yellow-300 animate-pulse">
-              Preparing your adventure...
-            </p>
+            
           </div>
         )}
       </div>
