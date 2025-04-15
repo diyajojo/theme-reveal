@@ -3,6 +3,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import QuizComponent from './components/quiz';
 import GameComponent from './components/escaperoom';
+import ClueComponent from './components/clue';
 import WelcomeComponent from './components/welcome';
 import CollectionModal from './components/modal';
 
@@ -20,11 +21,11 @@ const LoadingFallback = () => (
 const GameContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'quiz' | 'game' | 'finalchallenge'>('welcome');
+  const [currentStep, setCurrentStep] = useState<'welcome' | 'quiz' | 'game' | 'clue' | 'finalchallenge'>('welcome');
   const [playerName, setPlayerName] = useState('');
   const [playerAvatar, setPlayerAvatar] = useState('');
   const [quizScore, setQuizScore] = useState(0);
-  
+
   // Collection tracking
   const [collectedItems, setCollectedItems] = useState(0);
   const [showCollectionModal, setShowCollectionModal] = useState(false);
@@ -76,9 +77,13 @@ const GameContent = () => {
       if (autoProgressTimer) clearTimeout(autoProgressTimer);
       setAutoProgressTimer(setTimeout(() => {
         setShowCollectionModal(false);
-        setCurrentStep('finalchallenge');
+        setCurrentStep('clue');
       }, 3000));
     }
+  };
+
+  const handleClueComplete = () => {
+    setCurrentStep('finalchallenge');
   };
   
   const handleFinalChallengeComplete = () => {
@@ -108,8 +113,8 @@ const GameContent = () => {
       // After first collection (quiz completed) -> Go to escape room
       setCurrentStep('game');
     } else if (collectedItems === 2) {
-      // After second collection (escape room completed) -> Go to final challenge
-      setCurrentStep('finalchallenge');
+      // After second collection (escape room completed) -> Go to clue step
+      setCurrentStep('clue');
     } else if (collectedItems === 3) {
       // After theme reveal, could navigate to a celebration page or credits
       // For now, we'll just keep them on the final challenge page
@@ -148,6 +153,11 @@ const GameContent = () => {
                 quizScore={quizScore}
                 onGameComplete={handleGameComplete}
               />;
+      case 'clue':
+        return <ClueComponent
+          playerName={playerName}
+          playerAvatar={playerAvatar}
+          onComplete={handleClueComplete} userId={searchParams.get('userId') || ''}              />;
       case 'finalchallenge':
         return (
           <div className="min-h-screen bg-black flex items-center justify-center text-white">
@@ -178,7 +188,6 @@ const GameContent = () => {
         onClose={handleModalClose}
         collectedItems={collectedItems}
         totalItems={3}
-        revealTheme={revealTheme}
       />
     </main>
   );

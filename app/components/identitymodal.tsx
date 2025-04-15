@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { addUser } from '../utils/database';
 
 interface IdentityModalProps {
   onClose: () => void;
@@ -24,7 +25,7 @@ const IdentityModal = ({ onClose }: IdentityModalProps) => {
     }
   };
 
-  const handleNameSubmit = () => {
+  const handleNameSubmit = async () => {
     if (userName.trim() === '') {
       setError("Please enter your name.");
       return;
@@ -33,22 +34,32 @@ const IdentityModal = ({ onClose }: IdentityModalProps) => {
     setError('');
     setIsLoading(true);
 
-    localStorage.setItem('playerName', userName);
-    localStorage.setItem('playerAvatar', avatarOptions[avatarIndex]);
+    try {
+      const userId = await addUser(userName);
 
-    const text = "oIdentity confirmed. Preparing for mission...";
-    let i = 0;
-    const typingEffect = setInterval(() => {
-      if (i < text.length) {
-        setSuccessMessage((prev) => prev + text.charAt(i));
-        i++;
-      } else {
-        clearInterval(typingEffect);
-        setTimeout(() => {
-          router.push(`/game?name=${encodeURIComponent(userName)}&avatar=${encodeURIComponent(avatarOptions[avatarIndex])}`);
-        }, 1000);
-      }
-    }, 40);
+      // Store user information in localStorage
+      localStorage.setItem('playerName', userName);
+      localStorage.setItem('playerAvatar', avatarOptions[avatarIndex]);
+      localStorage.setItem('userId', userId.toString());
+
+      const text = "Identity confirmed. Preparing for mission...";
+      let i = 0;
+      const typingEffect = setInterval(() => {
+        if (i < text.length) {
+          setSuccessMessage((prev) => prev + text.charAt(i));
+          i++;
+        } else {
+          clearInterval(typingEffect);
+          setTimeout(() => {
+            router.push(`/game?userId=${userId}&name=${encodeURIComponent(userName)}&avatar=${encodeURIComponent(avatarOptions[avatarIndex])}`);
+          }, 1000);
+        }
+      }, 40);
+    } catch (error) {
+      console.error('Error details:', error);
+      setError("Failed to create user. Please try again.");
+      setIsLoading(false);
+    }
   };
 
   return (

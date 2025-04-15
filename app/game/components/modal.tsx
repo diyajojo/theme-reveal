@@ -6,7 +6,7 @@ interface CollectionModalProps {
   onClose: () => void;
   collectedItems: number;
   totalItems: number;
-  revealTheme?: boolean;
+  showFinalStage?: boolean;
 }
 
 const CollectionModal = ({ 
@@ -14,9 +14,8 @@ const CollectionModal = ({
   onClose, 
   collectedItems, 
   totalItems,
-  revealTheme = false
+  showFinalStage = false
 }: CollectionModalProps) => {
-  const [theme, setTheme] = useState('');
   const [animateItems, setAnimateItems] = useState(false);
   
   // Collection items (replace with your unique items)
@@ -28,20 +27,13 @@ const CollectionModal = ({
 
   useEffect(() => {
     if (isOpen) {
-      // Add animation delay
       setTimeout(() => {
         setAnimateItems(true);
       }, 300);
-      
-      // Set theme if all items collected
-      if (revealTheme) {
-        const themes = ["Casino Night", "Las Vegas Extravaganza", "Jackpot Celebration"];
-        setTheme(themes[Math.floor(Math.random() * themes.length)]);
-      }
     } else {
       setAnimateItems(false);
     }
-  }, [isOpen, revealTheme]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -50,14 +42,8 @@ const CollectionModal = ({
       <div className="bg-gray-900 text-white p-8 rounded-xl border-2 border-yellow-500 w-full max-w-md shadow-lg relative overflow-hidden">
         <div className="mb-6 text-center">
           <h3 className="text-2xl font-bold mb-2 text-yellow-300">
-            {revealTheme ? 'Theme Revealed!' : 'Mystery Collection'}
+            Mystery Collection
           </h3>
-          
-          {!revealTheme && (
-            <p className="text-yellow-100 mb-4">
-              Collect all treasures to reveal the secret theme
-            </p>
-          )}
           
           <div className="w-full bg-gray-800 h-3 rounded-full overflow-hidden">
             <div 
@@ -94,24 +80,27 @@ const CollectionModal = ({
           ))}
         </div>
         
-        {revealTheme && (
+        {showFinalStage && (
           <div className="text-center mb-6 animate-fadeIn">
-            <p className="text-lg text-yellow-100 mb-2">The theme for the night is:</p>
+            <p className="text-lg text-yellow-100 mb-2">Congratulations! All items collected!</p>
             <h4 className="text-3xl font-bold text-yellow-400">
-              {theme}
+              Ready for the Final Puzzle?
             </h4>
-            <p className="mt-4 text-yellow-200">
-              Get ready for an unforgettable farewell celebration!
-            </p>
           </div>
         )}
 
         <div className="flex justify-center">
           <button
-            onClick={onClose}
+            onClick={() => {
+              if (showFinalStage) {
+                window.location.href = 'https://jigex.com/WPZh5';
+              } else {
+                onClose();
+              }
+            }}
             className="px-6 py-3 bg-yellow-600 hover:bg-yellow-500 text-white font-bold rounded transition-colors flex items-center gap-2 cursor-pointer"
           >
-            {revealTheme ? 'Proceed to Celebration!' : 'Continue the Hunt'}
+            {showFinalStage ? 'Start Final Puzzle' : 'Continue the Hunt'}
           </button>
         </div>
       </div>

@@ -319,7 +319,6 @@ export default function GameComponent({ playerName, playerAvatar, quizScore, onG
 
   // Function to redirect to puzzle through an intermediate page
   const redirectToPuzzle = () => {
-    // Call the onGameComplete with true to trigger the collection modal
     onGameComplete(true);
   };
 
