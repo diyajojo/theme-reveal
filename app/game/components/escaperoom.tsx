@@ -282,8 +282,8 @@ export default function GameComponent({ playerName, playerAvatar, quizScore, onG
       // Increment game time
       gameTimeRef.current += 1;
       
-      // Spawn fairies after 30 seconds of gameplay
-      if (gameTimeRef.current === 30 && !fairiesSpawned) {
+      // Spawn fairies after 20 seconds (changed from 30) of gameplay
+      if (gameTimeRef.current === 10 && !fairiesSpawned) {
         setFairies(prevFairies => 
           prevFairies.map(fairy => ({ ...fairy, visible: true }))
         );
@@ -450,10 +450,29 @@ export default function GameComponent({ playerName, playerAvatar, quizScore, onG
                   <div>+1 Life</div>
                 </div>
               </div>
-              <p className="mb-6">
-                Use arrow keys to move. Beware of the guards - they'll teleport randomly and move faster than you think!
-                Collect all treasures before time runs out! Power-ups will appear after some time.
+
+              <div className="mb-6">
+                <h3 className="text-yellow-400 text-xl mb-2">Controls</h3>
+                <div className="inline-block bg-black bg-opacity-50 p-4 rounded-lg border border-yellow-600">
+                  <div className="grid grid-cols-3 gap-2 text-center">
+                    <div></div>
+                    <div className="p-2 bg-yellow-900 rounded">↑</div>
+                    <div></div>
+                    <div className="p-2 bg-yellow-900 rounded">←</div>
+                    <div className="p-2 bg-yellow-900 rounded">↓</div>
+                    <div className="p-2 bg-yellow-900 rounded">→</div>
+                  </div>
+                </div>
+                <p className="mt-2 text-sm text-yellow-200">
+                  Use arrow keys to navigate through the room
+                </p>
+              </div>
+
+              <p className="mb-6 text-yellow-100">
+                Watch out for the guards - they'll teleport randomly and move faster than you think!
+                Collect all stars before time runs out! Special power-ups will appear as you progress.
               </p>
+
               <button 
                 onClick={startGame}
                 className="bg-yellow-600 hover:bg-yellow-500 text-white px-8 py-3 rounded-full font-bold text-lg transition-colors"

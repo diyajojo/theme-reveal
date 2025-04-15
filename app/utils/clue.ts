@@ -14,4 +14,6 @@ export const clueLinks = [
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744737189/maxresdefault_wuu1pl.jpg',
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744737188/eiffel-tower-las-vegas-james-granberry_ddrddw.jpg',
   'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744737188/th_1_lhigeo.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744741657/Casino-Royale-Bond_pecumz.jpg',
+  'https://res.cloudinary.com/dj0zb1stt/image/upload/v1744741657/44b54fc8134967637983d25fef9cc668_up4t04.jpg',
 ];
