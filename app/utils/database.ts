@@ -2,12 +2,14 @@ import { supabase } from './supabase';
 import { clueLinks } from '../utils/clue';
 
 export async function addUser(username: string): Promise<number> {
+  // Convert username to lowercase
+  const normalizedUsername = username.toLowerCase();
 
   // First check if the username already exists
   const { data: existingUser, error: lookupError } = await supabase
     .from('users')
     .select('id')
-    .eq('username', username)
+    .eq('username', normalizedUsername)
     .single();
     
   if (existingUser) {
@@ -39,7 +41,7 @@ export async function addUser(username: string): Promise<number> {
     .insert([
       {
         id: nextId,
-        username: username,
+        username: normalizedUsername,
         clue: clueLinks[nextId],
       }
     ])

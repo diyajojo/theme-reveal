@@ -35,10 +35,11 @@ const IdentityModal = ({ onClose }: IdentityModalProps) => {
     setIsLoading(true);
 
     try {
-      const userId = await addUser(userName);
+      const normalizedUserName = userName.toLowerCase();
+      const userId = await addUser(normalizedUserName);
 
       // Store user information in localStorage
-      localStorage.setItem('playerName', userName);
+      localStorage.setItem('playerName', normalizedUserName);
       localStorage.setItem('playerAvatar', avatarOptions[avatarIndex]);
       localStorage.setItem('userId', userId.toString());
 
@@ -51,7 +52,7 @@ const IdentityModal = ({ onClose }: IdentityModalProps) => {
         } else {
           clearInterval(typingEffect);
           setTimeout(() => {
-            router.push(`/game?userId=${userId}&name=${encodeURIComponent(userName)}&avatar=${encodeURIComponent(avatarOptions[avatarIndex])}`);
+            router.push(`/game?userId=${userId}&name=${encodeURIComponent(normalizedUserName)}&avatar=${encodeURIComponent(avatarOptions[avatarIndex])}`);
           }, 1000);
         }
       }, 40);
